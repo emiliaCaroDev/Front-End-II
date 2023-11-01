@@ -44,9 +44,10 @@ const albumesFamosos = [{
 /* -------------------------------------------------------------------------- */
 const covers = document.querySelector(".covers")
 
-covers.innerHTML = '';
+
 
 let renderizar = data =>{
+  covers.innerHTML = '';
   data.map(item=>{
     return covers.innerHTML += 
       `<li>
@@ -54,7 +55,7 @@ let renderizar = data =>{
         <h2>${item.nombre}</h2>
         <img src="${item.imagen}">
         <p>
-          <i class="fa-solid fa-heart ${item.like ? "favorito": ""}" id="${item.id} "></i>
+          <i class="fa-solid fa-heart ${item.like ? "favorito": ""}" id="${item.id}"></i>
         </p>  
       </li>`
   })
@@ -63,9 +64,7 @@ let renderizar = data =>{
 renderizar(albumesFamosos);
 
 
-/* -------------------------------------------------------------------------- */
-/*                          FUNCION: marcar favorito                          */
-/* -------------------------------------------------------------------------- */
+
 
 
 const cantAlbums = document.querySelector("#cant-albums");
@@ -78,3 +77,22 @@ let favoritos = data =>{
 }
 
 cantFavoritos.innerText +=`${favoritos(albumesFamosos).length} favoritos`;
+
+/* -------------------------------------------------------------------------- */
+/*                          FUNCION: marcar favorito                          */
+/* -------------------------------------------------------------------------- */
+
+let marcarFavorito = (data)=>{
+  const btnLikes = document.querySelectorAll('.fa-heart');
+  btnLikes.forEach(btn =>{
+    btn.addEventListener('click',()=>{
+        data.forEach(item=>{
+          item.id === btn.id ? item.like =! item.like  : null ;
+        })
+        renderizar(albumesFamosos)
+        marcarFavorito(albumesFamosos);
+    })
+  })
+}
+
+marcarFavorito(albumesFamosos);
