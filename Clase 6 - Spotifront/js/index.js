@@ -39,6 +39,7 @@ const albumesFamosos = [{
 ];
 
 
+
 /* -------------------------------------------------------------------------- */
 /*                  FUNCION: renderizar tarjetas del almbumes                 */
 /* -------------------------------------------------------------------------- */
@@ -68,15 +69,19 @@ renderizar(albumesFamosos);
 
 
 const cantAlbums = document.querySelector("#cant-albums");
-cantAlbums.innerText += `${albumesFamosos.length} álbumes` 
-
 const cantFavoritos = document.querySelector("#cant-favoritos");
 
-let favoritos = data =>{
-  return data.filter(item=> item.like == true)
+let calcularFavoritos = ()=>{
+  cantAlbums.innerText += `${albumesFamosos.length} álbumes` 
+
+  let favoritos = data =>{
+    return data.filter(item=> item.like == true)
+  }
+  
+  cantFavoritos.innerText +=`${favoritos(albumesFamosos).length} favoritos`; 
 }
 
-cantFavoritos.innerText +=`${favoritos(albumesFamosos).length} favoritos`;
+
 
 /* -------------------------------------------------------------------------- */
 /*                          FUNCION: marcar favorito                          */
@@ -91,8 +96,10 @@ let marcarFavorito = (data)=>{
         })
         renderizar(albumesFamosos)
         marcarFavorito(albumesFamosos);
+        calcularFavoritos();
     })
   })
 }
 
 marcarFavorito(albumesFamosos);
+
